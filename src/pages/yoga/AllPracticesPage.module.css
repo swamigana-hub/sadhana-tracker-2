@@ -1,0 +1,79 @@
+.page {
+  padding: var(--space-5);
+  padding-bottom: var(--space-12);
+}
+
+.title {
+  font: var(--text-heading-lg);
+  margin: 0 0 var(--space-5);
+}
+
+.sectionTitle {
+  font: var(--text-section);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-secondary);
+  margin: var(--space-6) 0 var(--space-3);
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-2);
+  border: none;
+  border-radius: var(--radius-card);
+  background: var(--color-card);
+  box-shadow: var(--shadow-card);
+  cursor: pointer;
+  text-align: left;
+}
+
+.cardText {
+  flex: 1;
+}
+
+.name {
+  display: block;
+  font: var(--text-practice);
+  margin-bottom: var(--space-1);
+}
+
+.chips {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.chip {
+  font: var(--text-body-sm);
+  color: var(--color-primary);
+  background: var(--color-selected-tint);
+  padding: 2px var(--space-2);
+  border-radius: 6px;
+}
+
+.reentry {
+  margin-top: var(--space-8);
+  text-align: center;
+}
+
+.sheetOption {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: var(--space-4);
+  border: none;
+  border-bottom: 1px solid var(--color-divider);
+  background: none;
+  font: var(--text-body);
+  cursor: pointer;
+}
+
+.limitMsg {
+  font: var(--text-body);
+  color: var(--color-text-secondary);
+  padding: var(--space-4) 0;
+}

@@ -1,0 +1,54 @@
+.tile {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.before-tracking {
+  background: var(--color-tile-before);
+  border: 1px solid var(--color-divider);
+}
+
+.future {
+  background: var(--color-tile-future);
+  border: 1px solid var(--color-divider);
+}
+
+.missed {
+  background: var(--color-tile-future);
+  border: 1px solid var(--color-divider);
+}
+
+.missedMark {
+  font: 600 14px/1 var(--font-family);
+  color: var(--color-tile-missed-mark);
+}
+
+.p25 {
+  background: var(--color-tile-2);
+}
+
+.p50 {
+  background: var(--color-tile-3);
+}
+
+.p75 {
+  background: var(--color-tile-4);
+}
+
+.p100 {
+  background: var(--color-tile-5);
+}
+
+.p100plus {
+  background: var(--color-tile-5);
+}
+
+.glow {
+  box-shadow: var(--color-tile-glow-strong);
+}

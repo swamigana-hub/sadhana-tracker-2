@@ -1,0 +1,89 @@
+.layout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.statSide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  flex: 1;
+  min-width: 0;
+}
+
+.statIcon {
+  color: var(--color-text-secondary);
+}
+
+.statValue {
+  font: var(--text-cta);
+  color: var(--color-text-primary);
+  line-height: 1.2;
+}
+
+.statLabel {
+  font: var(--text-body-sm);
+  color: var(--color-text-secondary);
+}
+
+.wrap {
+  position: relative;
+  width: 172px;
+  height: 172px;
+  flex-shrink: 0;
+}
+
+.svg {
+  display: block;
+}
+
+.track {
+  stroke: var(--color-ring-track);
+}
+
+.fill {
+  stroke: url(#ringFillGradient);
+  transition: stroke-dashoffset 0.4s ease;
+}
+
+.center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.percent {
+  font: var(--text-heading-md);
+  color: var(--color-text-primary);
+  line-height: 1.1;
+}
+
+.percentLabel {
+  font: var(--text-body-sm);
+  color: var(--color-text-secondary);
+}
+
+.celebrate .fill {
+  filter: brightness(1.15);
+  animation: ringGlow 1.2s ease-out;
+}
+
+@keyframes ringGlow {
+  0% {
+    filter: brightness(1);
+  }
+  40% {
+    filter: brightness(1.2) drop-shadow(0 0 6px var(--color-ring-gradient-end));
+  }
+  100% {
+    filter: brightness(1.15);
+  }
+}

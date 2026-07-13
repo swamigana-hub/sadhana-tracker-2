@@ -1,0 +1,12 @@
+.cluster {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+}
+
+.cluster img,
+.cluster [class*='illustration'] {
+  width: 56px;
+  height: 56px;
+}

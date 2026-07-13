@@ -1,0 +1,78 @@
+.cardGrid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.card {
+  background: var(--color-card);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  border: 2px solid transparent;
+}
+
+.cardSelected {
+  border-color: var(--color-primary);
+  background: var(--color-selected-tint);
+}
+
+.cardBody {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.cardName {
+  font: var(--text-practice);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding: 0 var(--space-4) var(--space-3);
+}
+
+.chip {
+  padding: var(--space-2) var(--space-3);
+  border-radius: 999px;
+  border: 1px solid var(--color-primary);
+  background: var(--color-card);
+  color: var(--color-primary);
+  font: var(--text-body-sm);
+  cursor: pointer;
+  min-height: 36px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+  font: var(--text-body);
+}
+
+.field input {
+  padding: var(--space-3);
+  border: 1px solid var(--color-divider);
+  border-radius: var(--radius-button);
+  font: var(--text-body);
+}
+
+.singleDetail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.detailText {
+  font: var(--text-body-sm);
+  color: var(--color-text-secondary);
+}

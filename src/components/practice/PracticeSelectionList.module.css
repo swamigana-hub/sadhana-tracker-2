@@ -1,0 +1,33 @@
+.list {
+  flex: 1;
+  overflow-y: auto;
+  background: var(--color-card);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+
+.listLabel {
+  margin: 0;
+  padding: var(--space-4) var(--space-4) var(--space-2);
+  font: var(--text-section);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.sectionTitle {
+  margin: 0;
+  padding: var(--space-3) var(--space-4) var(--space-2);
+  font: var(--text-section);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--color-card);
+}
+
+.sectionTitle:not(:first-of-type) {
+  padding-top: var(--space-4);
+}

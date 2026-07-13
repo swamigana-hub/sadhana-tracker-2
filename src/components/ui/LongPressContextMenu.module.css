@@ -1,0 +1,45 @@
+.root {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  border: none;
+  background: var(--color-overlay);
+  cursor: default;
+}
+
+.sheet {
+  position: relative;
+  margin: 0;
+  padding: var(--space-2) 0 max(var(--space-4), env(safe-area-inset-bottom));
+  background: var(--color-card);
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.12);
+}
+
+.item {
+  display: block;
+  width: 100%;
+  padding: var(--space-4);
+  border: none;
+  background: none;
+  text-align: left;
+  font: var(--text-body);
+  color: var(--color-text-primary);
+  cursor: pointer;
+}
+
+.item:active {
+  background: var(--color-selected-tint);
+}
+
+.item + .item {
+  border-top: 1px solid var(--color-divider);
+}

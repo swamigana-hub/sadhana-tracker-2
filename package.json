@@ -1,0 +1,36 @@
+{
+  "name": "sadhana-tracker-v2",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "prepare": "node scripts/setup-git-identity.mjs",
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "check:images": "node scripts/check-image-sizes.mjs",
+    "e2e:smoke": "bash scripts/e2e-smoke.sh"
+  },
+  "dependencies": {
+    "@sentry/react": "^10.63.0",
+    "@supabase/supabase-js": "^2.49.1",
+    "headroom-ai": "^0.22.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^7.1.5"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.2.0",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "jsdom": "^26.0.0",
+    "typescript": "~5.7.3",
+    "vite": "^6.1.0",
+    "vite-plugin-pwa": "^0.21.1",
+    "vitest": "^3.0.5"
+  }
+}

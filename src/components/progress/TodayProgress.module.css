@@ -1,0 +1,11 @@
+.section {
+  padding: var(--space-4) 0;
+}
+
+.label {
+  font: var(--text-section);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--space-3);
+}

@@ -1,0 +1,11 @@
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.footer {
+  margin-top: auto;
+  padding-top: var(--space-6);
+}

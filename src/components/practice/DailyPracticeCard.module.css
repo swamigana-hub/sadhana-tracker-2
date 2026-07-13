@@ -1,0 +1,51 @@
+.card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--color-card);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  touch-action: manipulation;
+  user-select: none;
+}
+
+.pressed {
+  opacity: 0.85;
+  transform: scale(0.98);
+}
+
+.completed {
+  border: 1px solid var(--color-primary);
+}
+
+.info {
+  flex: 1;
+  min-width: 0;
+}
+
+.name {
+  margin: 0;
+  font: var(--text-practice);
+  color: var(--color-text-primary);
+}
+
+.completedLabel {
+  font: var(--text-body-sm);
+  color: var(--color-primary);
+}
+
+.logButton {
+  padding: var(--space-2) var(--space-4);
+  border: none;
+  border-radius: var(--radius-button);
+  background: var(--color-primary);
+  color: var(--color-text-on-primary);
+  font: var(--text-cta);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.logButton:active {
+  background: var(--color-primary-dark);
+}

@@ -1,0 +1,16 @@
+.label {
+  font: var(--text-body-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.2;
+  word-break: break-word;
+  padding: var(--space-2) 0;
+}
+
+.enlargedRow :global([class*='DayTile']) {
+  transform: scale(1.25);
+  transform-origin: center;
+}
+
+.enlargedRow {
+  padding: var(--space-2) 0;
+}
