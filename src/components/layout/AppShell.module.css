@@ -9,3 +9,7 @@
   flex: 1;
   padding-bottom: calc(72px + env(safe-area-inset-bottom));
 }
+
+.mainNoNav {
+  padding-bottom: env(safe-area-inset-bottom);
+}

@@ -31,3 +31,11 @@
 .sectionTitle:not(:first-of-type) {
   padding-top: var(--space-4);
 }
+
+.noResults {
+  margin: 0;
+  padding: var(--space-4);
+  font: var(--text-body);
+  color: var(--color-text-secondary);
+  text-align: center;
+}

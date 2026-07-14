@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useLocation, Navigate } from 'react-router-dom';
 import { Button } from '../../components/ui/Button';
+import { PracticeSearchInput } from '../../components/ui/PracticeSearchInput';
 import { PracticeSelectionList } from '../../components/practice/PracticeSelectionList';
 import { SetupStepLayout } from './SetupStepLayout';
 import { SetupCalendarIcon } from './SetupScreenIcons';
@@ -31,6 +32,7 @@ export default function OtherPracticesPage() {
   const [selected, setSelected] = useState<Set<string>>(
     () => new Set(getSetupDraftOther())
   );
+  const [searchQuery, setSearchQuery] = useState('');
 
   const otherIds = sortByCanonicalOrder([...selected]);
   const excludeDaily = useMemo(() => new Set(daily), [daily]);
@@ -74,10 +76,12 @@ export default function OtherPracticesPage() {
       onBack={() => navigate('/setup/daily', { state: { daily } })}
       footer={<Button onClick={finish}>Done</Button>}
     >
+      <PracticeSearchInput value={searchQuery} onChange={setSearchQuery} />
       <PracticeSelectionList
         selectedIds={selected}
         onToggle={toggle}
         excludeIds={excludeDaily}
+        searchQuery={searchQuery}
       />
     </SetupStepLayout>
   );

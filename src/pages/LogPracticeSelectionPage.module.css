@@ -72,7 +72,31 @@
   gap: var(--space-1);
 }
 
-.detailText {
-  font: var(--text-body-sm);
-  color: var(--color-text-secondary);
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.optionBtn {
+  padding: var(--space-3);
+  border: 1px solid var(--color-divider);
+  border-radius: var(--radius-button);
+  background: var(--color-card);
+  font: var(--text-body);
+  cursor: pointer;
+  text-align: left;
+}
+
+.optionSelected {
+  border-color: var(--color-primary);
+  background: var(--color-selected-tint);
+}
+
+.select {
+  padding: var(--space-3);
+  border: 1px solid var(--color-divider);
+  border-radius: var(--radius-button);
+  font: var(--text-body);
+  width: 100%;
 }

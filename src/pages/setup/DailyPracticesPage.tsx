@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '../../components/ui/Button';
+import { PracticeSearchInput } from '../../components/ui/PracticeSearchInput';
 import { PracticeSelectionList } from '../../components/practice/PracticeSelectionList';
 import { SetupStepLayout } from './SetupStepLayout';
 import { SetupSunIcon } from './SetupScreenIcons';
@@ -20,6 +21,7 @@ export default function DailyPracticesPage() {
   const restored = (location.state as { daily?: string[] } | null)?.daily;
   const initialDaily = restored?.length ? restored : getSetupDraftDaily();
   const [selected, setSelected] = useState<Set<string>>(() => new Set(initialDaily));
+  const [searchQuery, setSearchQuery] = useState('');
 
   const dailyIds = useMemo(() => sortByCanonicalOrder([...selected]), [selected]);
 
@@ -63,7 +65,8 @@ export default function DailyPracticesPage() {
         </Button>
       }
     >
-      <PracticeSelectionList selectedIds={selected} onToggle={toggle} />
+      <PracticeSearchInput value={searchQuery} onChange={setSearchQuery} />
+      <PracticeSelectionList selectedIds={selected} onToggle={toggle} searchQuery={searchQuery} />
     </SetupStepLayout>
   );
 }

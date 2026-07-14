@@ -12,13 +12,14 @@ export default function ProgressPage() {
   return (
     <AppShell>
       <div className={styles.page}>
-        <h1 className={styles.title}>Progress</h1>
+        <h2 className={styles.subHeader}>Overall</h2>
         <div className={styles.stats}>
           <StatBox label="Total days" value={daysPracticed} />
           <StatBox label="Total minutes" value={totalMinutes} />
           <StatBox label="Current streak" value={current} />
           <StatBox label="Longest streak" value={longest} />
         </div>
+        <h2 className={styles.subHeader}>Week over week</h2>
         <WeeklyHeatmap weeks={heatmapWeeks} />
       </div>
     </AppShell>

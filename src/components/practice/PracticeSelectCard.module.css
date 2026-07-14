@@ -1,0 +1,25 @@
+.card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-2);
+  border: 2px solid transparent;
+  border-radius: var(--radius-card);
+  background: var(--color-card);
+  box-shadow: var(--shadow-card);
+  cursor: pointer;
+  text-align: left;
+  font: var(--text-practice);
+  transition: background-color 0.15s, border-color 0.15s;
+}
+
+.selected {
+  border-color: #6ab04c;
+  background: #eef8e8;
+}
+
+.name {
+  flex: 1;
+}

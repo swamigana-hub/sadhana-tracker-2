@@ -39,9 +39,8 @@ export function BottomSheet({
                 Back
               </button>
             )}
-            <h2 className={styles.title}>
-              {stepLabel ?? title}
-            </h2>
+            {stepLabel && <p className={styles.stepLabel}>{stepLabel}</p>}
+            {title && <h2 className={styles.title}>{title}</h2>}
           </div>
         )}
         <div className={styles.body}>{children}</div>

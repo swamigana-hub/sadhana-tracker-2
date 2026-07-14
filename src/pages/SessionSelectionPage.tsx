@@ -1,8 +1,9 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppShell } from '../components/layout/AppShell';
+import { ScreenHeader } from '../components/layout/ScreenHeader';
 import { Button } from '../components/ui/Button';
-import { PracticeRow } from '../components/practice/PracticeRow';
+import { PracticeSelectCard } from '../components/practice/PracticeSelectCard';
 import { PracticeIllustration } from '../components/practice/PracticeIllustration';
 import { useAppData } from '../context/AppDataContext';
 import { getPracticeById, sortByCanonicalOrder } from '../data/practices';
@@ -10,10 +11,7 @@ import { getRecentSessions } from '../services/recentSessions';
 import { sessionSignature } from '../services/practiceLogEntries';
 import { syncPracticeListsToBackend } from '../services/setupFlow';
 import { setActiveSession } from '../services/sessionStore';
-import {
-  addToOther,
-  type PracticeLists,
-} from '../services/practiceInstances';
+import { addToOther, type PracticeLists } from '../services/practiceInstances';
 import { setPracticeLists, getPracticeLists } from '../services/localStore';
 import { tryGetSupabase } from '../lib/supabase/client';
 import pageStyles from '../styles/pageLayout.module.css';
@@ -23,9 +21,7 @@ function buildPracticeSections(lists: PracticeLists, allPoolIds: string[]) {
   const dailyIds = lists.daily.map((p) => p.practiceId);
   const otherIds = lists.other.map((p) => p.practiceId);
   const scheduled = new Set([...dailyIds, ...otherIds]);
-  const allOtherIds = sortByCanonicalOrder(
-    allPoolIds.filter((id) => !scheduled.has(id))
-  );
+  const allOtherIds = sortByCanonicalOrder(allPoolIds.filter((id) => !scheduled.has(id)));
   return { dailyIds, otherIds, allOtherIds };
 }
 
@@ -35,7 +31,6 @@ export default function SessionSelectionPage() {
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [highlightedSession, setHighlightedSession] = useState<string | null>(null);
   const [allOtherExpanded, setAllOtherExpanded] = useState(false);
-  const [loadError, setLoadError] = useState(false);
 
   const recentSessions = getRecentSessions();
   const sections = useMemo(
@@ -46,13 +41,11 @@ export default function SessionSelectionPage() {
   const togglePractice = (practiceId: string, fromAllOther = false) => {
     setSelected((prev) => {
       const next = new Set(prev);
-      if (next.has(practiceId)) {
-        next.delete(practiceId);
-      } else {
+      if (next.has(practiceId)) next.delete(practiceId);
+      else {
         next.add(practiceId);
         if (fromAllOther) {
-          const current = getPracticeLists();
-          const updated = addToOther(current, practiceId);
+          const updated = addToOther(getPracticeLists(), practiceId);
           setPracticeLists(updated);
           syncPracticeListsToBackend(updated, deviceId, tryGetSupabase());
         }
@@ -65,8 +58,7 @@ export default function SessionSelectionPage() {
         const nextSelected = new Set(selected);
         if (nextSelected.has(practiceId)) nextSelected.delete(practiceId);
         else nextSelected.add(practiceId);
-        const sig = sessionSignature([...nextSelected]);
-        if (sig !== sessionSignature(session.practiceIds)) {
+        if (sessionSignature([...nextSelected]) !== sessionSignature(session.practiceIds)) {
           setHighlightedSession(null);
         }
       }
@@ -84,28 +76,28 @@ export default function SessionSelectionPage() {
   };
 
   const startSession = () => {
-    const ids = [...selected];
+    const ids = sortByCanonicalOrder([...selected]);
     setActiveSession(ids);
     navigate('/player');
   };
 
-  if (loadError) {
+  const renderCard = (id: string, fromAllOther = false) => {
+    const practice = getPracticeById(id);
+    if (!practice) return null;
     return (
-      <AppShell>
-        <div className={pageStyles.page}>
-          <div className={pageStyles.scroll}>
-            <div className={pageStyles.error}>
-              <p>Couldn&apos;t load your practices</p>
-              <Button onClick={() => setLoadError(false)}>Retry</Button>
-            </div>
-          </div>
-        </div>
-      </AppShell>
+      <PracticeSelectCard
+        key={id}
+        practiceId={id}
+        name={practice.name}
+        selected={selected.has(id)}
+        onToggle={() => togglePractice(id, fromAllOther)}
+      />
     );
-  }
+  };
 
   return (
-    <AppShell>
+    <AppShell showBottomNav={false}>
+      <ScreenHeader title="Select practices for this session" />
       <div className={pageStyles.page}>
         <div className={pageStyles.scroll}>
           {recentSessions.length > 0 && (
@@ -142,34 +134,10 @@ export default function SessionSelectionPage() {
           )}
 
           <h2 className={pageStyles.sectionTitle}>My Daily Practices</h2>
-          {sections.dailyIds.map((id) => {
-            const practice = getPracticeById(id);
-            if (!practice) return null;
-            return (
-              <PracticeRow
-                key={id}
-                practiceId={id}
-                name={practice.name}
-                selected={selected.has(id)}
-                onToggle={() => togglePractice(id)}
-              />
-            );
-          })}
+          {sections.dailyIds.map((id) => renderCard(id))}
 
           <h2 className={pageStyles.sectionTitle}>My Other Practices</h2>
-          {sections.otherIds.map((id) => {
-            const practice = getPracticeById(id);
-            if (!practice) return null;
-            return (
-              <PracticeRow
-                key={id}
-                practiceId={id}
-                name={practice.name}
-                selected={selected.has(id)}
-                onToggle={() => togglePractice(id)}
-              />
-            );
-          })}
+          {sections.otherIds.map((id) => renderCard(id))}
 
           {sections.allOtherIds.length > 0 && (
             <section>
@@ -184,19 +152,7 @@ export default function SessionSelectionPage() {
               </button>
               {allOtherExpanded && (
                 <div className={pageStyles.collapsedBody}>
-                  {sections.allOtherIds.map((id) => {
-                    const practice = getPracticeById(id);
-                    if (!practice) return null;
-                    return (
-                      <PracticeRow
-                        key={id}
-                        practiceId={id}
-                        name={practice.name}
-                        selected={selected.has(id)}
-                        onToggle={() => togglePractice(id, true)}
-                      />
-                    );
-                  })}
+                  {sections.allOtherIds.map((id) => renderCard(id, true))}
                 </div>
               )}
             </section>

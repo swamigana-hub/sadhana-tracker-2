@@ -1,5 +1,5 @@
 import { getPracticeById } from '../data/practices';
-import { durationFromCycles, getDefaultCycles } from '../data/practiceDetails';
+import { computeDurationFromDetails } from '../data/practiceMasterDetails';
 import type { LoggedPracticeEntry, PracticeLogPayload } from '../types/practiceEntry';
 
 export function normalizePracticeEntry(entry: PracticeLogPayload): LoggedPracticeEntry {
@@ -20,9 +20,12 @@ export function entryMatchesPracticeId(entry: PracticeLogPayload, practiceId: st
 export function resolveEntryMinutes(entry: PracticeLogPayload): number {
   const normalized = normalizePracticeEntry(entry);
   if (normalized.durationMinutes != null) return normalized.durationMinutes;
-  if (normalized.cycles != null) {
-    return durationFromCycles(normalized.practiceId, normalized.cycles);
-  }
+  const computed = computeDurationFromDetails(normalized.practiceId, {
+    cycles: normalized.cycles,
+    level: normalized.level,
+    kapalabhatis: normalized.kapalabhatis,
+  });
+  if (computed > 0) return computed;
   return getPracticeById(normalized.practiceId)?.durationMinutes ?? 0;
 }
 
@@ -38,8 +41,10 @@ export function toLoggedEntries(
     const detail = details?.[practiceId];
     return {
       practiceId,
-      cycles: detail?.cycles ?? getDefaultCycles(practiceId),
+      cycles: detail?.cycles,
       durationMinutes: detail?.durationMinutes,
+      level: detail?.level,
+      kapalabhatis: detail?.kapalabhatis,
     };
   });
 }

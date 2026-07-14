@@ -1,29 +1,102 @@
 .page {
-  min-height: calc(100dvh - 72px);
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  padding: var(--space-6) var(--space-5);
+  background: linear-gradient(180deg, #c9a227 0%, #8b6914 45%, #3d2e0a 100%);
+  color: #fff;
+  position: relative;
+}
+
+.closeBtn {
+  position: absolute;
+  top: var(--space-4);
+  left: var(--space-4);
+  z-index: 5;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.35);
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
 }
 
 .content {
   flex: 1;
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
+  padding: var(--space-8) var(--space-5) var(--space-4);
   text-align: center;
 }
 
-.headline {
-  font: var(--text-heading-lg);
-  margin: 0 0 var(--space-3);
+.instruction {
+  font: italic 22px/1.4 Georgia, 'Times New Roman', serif;
+  margin: 0 0 var(--space-6);
+}
+
+.visual {
+  position: relative;
+  width: min(280px, 78vw);
+  margin-bottom: var(--space-6);
+}
+
+.centerPhoto {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.illustrationOverlay {
+  position: absolute;
+  bottom: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 72px;
+  height: 72px;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
+}
+
+.practiceName {
+  font: var(--text-heading-md);
+  margin: 0 0 var(--space-2);
 }
 
 .subline {
   font: var(--text-body);
-  color: var(--color-text-secondary);
+  opacity: 0.9;
   margin: 0;
 }
 
 .footer {
-  padding-top: var(--space-6);
+  padding: var(--space-5);
+  padding-bottom: calc(var(--space-5) + env(safe-area-inset-bottom));
+}
+
+.completeBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.sublabel {
+  font: var(--text-body-sm);
+  opacity: 0.85;
+}
+
+.autoplayPrompt {
+  margin-top: var(--space-4);
+  padding: var(--space-3);
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-button);
+  font: var(--text-body-sm);
+}
+
+.autoplayPrompt button {
+  margin-top: var(--space-2);
+  width: 100%;
 }

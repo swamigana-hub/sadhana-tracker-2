@@ -14,7 +14,7 @@ import {
   moveDailyToOther,
   moveOtherToDaily,
 } from '../../services/practiceInstances';
-import { hasPracticeLoggedToday } from '../../services/streakCalculator';
+import { isPlacementLoggedToday } from '../../services/placementLogging';
 import { setSetupReentry } from '../../services/setupReentry';
 import { tryGetSupabase } from '../../lib/supabase/client';
 import pageStyles from '../../styles/pageLayout.module.css';
@@ -66,7 +66,7 @@ export default function MyPracticesPage() {
   ) => {
     const practice = getPracticeById(practiceId);
     if (!practice) return null;
-    const done = hasPracticeLoggedToday(logs, today, practiceId);
+    const done = isPlacementLoggedToday(logs, today, dailyPlacements, otherPlacements, instanceId);
     return (
       <button
         key={instanceId}
@@ -81,11 +81,16 @@ export default function MyPracticesPage() {
     );
   };
 
+  const removeLabel =
+    sheetList === 'daily' ? 'Remove from daily practices' : 'Remove from other practices';
+  const moveLabel =
+    sheetList === 'daily' ? 'Move to other practices' : 'Move to daily practices';
+
   return (
     <AppShell>
       <div className={pageStyles.page}>
         <div className={pageStyles.scroll}>
-          <TodayProgress />
+          <TodayProgress centerLabel />
 
           <h2 className={pageStyles.sectionTitle}>My Daily Practices</h2>
           {dailyPlacements.length === 0 ? (
@@ -132,10 +137,10 @@ export default function MyPracticesPage() {
           onClose={() => setSheetInstanceId(null)}
         >
           <button type="button" className={styles.sheetOption} onClick={remove}>
-            Remove
+            {removeLabel}
           </button>
           <button type="button" className={styles.sheetOption} onClick={move}>
-            Move to {sheetList === 'daily' ? 'Other' : 'Daily'}
+            {moveLabel}
           </button>
         </BottomSheet>
       )}

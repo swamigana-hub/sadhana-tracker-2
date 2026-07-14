@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppShell } from '../../components/layout/AppShell';
 import { Button } from '../../components/ui/Button';
@@ -10,7 +10,12 @@ import {
   getSetupPopularPractices,
   PRACTICES,
 } from '../../data/practices';
-import { countPlacements, addToDaily, addToOther } from '../../services/practiceInstances';
+import {
+  addToDaily,
+  addToOther,
+  removeFromDaily,
+  removeFromOther,
+} from '../../services/practiceInstances';
 import { getScheduleChips } from '../../services/practiceScheduleChips';
 import { setSetupReentry } from '../../services/setupReentry';
 import { tryGetSupabase } from '../../lib/supabase/client';
@@ -24,6 +29,13 @@ export default function AllPracticesPage() {
   const popular = getSetupPopularPractices();
   const allAlpha = [...PRACTICES].sort((a, b) => a.name.localeCompare(b.name));
 
+  const counts = useMemo(() => {
+    if (!sheetPracticeId) return { daily: 0, other: 0, total: 0 };
+    const daily = lists.daily.filter((p) => p.practiceId === sheetPracticeId).length;
+    const other = lists.other.filter((p) => p.practiceId === sheetPracticeId).length;
+    return { daily, other, total: daily + other };
+  }, [lists, sheetPracticeId]);
+
   const onAdd = (target: 'daily' | 'other') => {
     if (!sheetPracticeId) return;
     const updated =
@@ -32,6 +44,67 @@ export default function AllPracticesPage() {
         : addToOther(lists, sheetPracticeId);
     practiceInstances.replaceListsOptimistic(updated, deviceId, tryGetSupabase());
     setSheetPracticeId(null);
+  };
+
+  const onRemoveFromDaily = () => {
+    if (!sheetPracticeId) return;
+    const placement = lists.daily.find((p) => p.practiceId === sheetPracticeId);
+    if (!placement) return;
+    const updated = removeFromDaily(lists, placement.instanceId);
+    practiceInstances.replaceListsOptimistic(updated, deviceId, tryGetSupabase());
+    setSheetPracticeId(null);
+  };
+
+  const onRemoveFromOther = () => {
+    if (!sheetPracticeId) return;
+    const placement = lists.other.find((p) => p.practiceId === sheetPracticeId);
+    if (!placement) return;
+    const updated = removeFromOther(lists, placement.instanceId);
+    practiceInstances.replaceListsOptimistic(updated, deviceId, tryGetSupabase());
+    setSheetPracticeId(null);
+  };
+
+  const renderSheetOptions = () => {
+    const { daily, other, total } = counts;
+
+    if (total >= 2) {
+      if (daily >= 2 && other === 0) {
+        return (
+          <>
+            <button type="button" className={styles.sheetOption} onClick={() => onAdd('other')}>
+              Add to other practices
+            </button>
+            <button type="button" className={styles.sheetOption} onClick={onRemoveFromDaily}>
+              Remove from daily practices
+            </button>
+          </>
+        );
+      }
+      if (other >= 2 && daily === 0) {
+        return (
+          <>
+            <button type="button" className={styles.sheetOption} onClick={() => onAdd('daily')}>
+              Add to daily practice
+            </button>
+            <button type="button" className={styles.sheetOption} onClick={onRemoveFromOther}>
+              Remove from other practices
+            </button>
+          </>
+        );
+      }
+      return <p className={styles.limitMsg}>This practice can only be added twice.</p>;
+    }
+
+    return (
+      <>
+        <button type="button" className={styles.sheetOption} onClick={() => onAdd('daily')}>
+          Add to daily practice
+        </button>
+        <button type="button" className={styles.sheetOption} onClick={() => onAdd('other')}>
+          Add to other practices
+        </button>
+      </>
+    );
   };
 
   const renderCard = (practiceId: string) => {
@@ -60,12 +133,9 @@ export default function AllPracticesPage() {
     );
   };
 
-  const atMax = sheetPracticeId ? countPlacements(lists, sheetPracticeId) >= 2 : false;
-
   return (
     <AppShell>
       <div className={styles.page}>
-        <h1 className={styles.title}>All Practices</h1>
         <section>
           <h2 className={styles.sectionTitle}>Commonly Practiced</h2>
           {popular.map((p) => renderCard(p.id))}
@@ -93,18 +163,7 @@ export default function AllPracticesPage() {
           title={getPracticeById(sheetPracticeId)?.name}
           onClose={() => setSheetPracticeId(null)}
         >
-          {atMax ? (
-            <p className={styles.limitMsg}>This practice can only be added twice.</p>
-          ) : (
-            <>
-              <button type="button" className={styles.sheetOption} onClick={() => onAdd('daily')}>
-                Add to Daily
-              </button>
-              <button type="button" className={styles.sheetOption} onClick={() => onAdd('other')}>
-                Add to Other
-              </button>
-            </>
-          )}
+          {renderSheetOptions()}
         </BottomSheet>
       )}
     </AppShell>

@@ -1,0 +1,9 @@
+.search {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-4);
+  border: 1px solid var(--color-divider);
+  border-radius: var(--radius-button);
+  font: var(--text-body);
+  background: var(--color-card);
+}

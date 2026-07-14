@@ -39,8 +39,6 @@
   margin: 0;
   padding: 0;
   width: 100%;
-  max-height: 40vh;
-  overflow-y: auto;
   background: var(--color-card);
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-card);

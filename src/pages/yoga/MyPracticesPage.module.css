@@ -15,8 +15,7 @@
 }
 
 .cardDone {
-  opacity: 0.85;
-  border-left: 3px solid var(--color-primary);
+  background: var(--color-selected-tint);
 }
 
 .doneMark {

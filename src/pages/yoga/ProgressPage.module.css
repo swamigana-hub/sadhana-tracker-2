@@ -2,9 +2,12 @@
   padding: var(--space-5);
 }
 
-.title {
-  font: var(--text-heading-lg);
-  margin: 0 0 var(--space-5);
+.subHeader {
+  font: var(--text-section);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--space-3);
 }
 
 .stats {

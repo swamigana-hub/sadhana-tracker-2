@@ -43,7 +43,7 @@ export default function SuccessPage() {
     : 0;
 
   return (
-    <AppShell>
+    <AppShell showBottomNav={false}>
       <div className={styles.page}>
         <div className={styles.hero}>
           <div className={styles.illustrations}>

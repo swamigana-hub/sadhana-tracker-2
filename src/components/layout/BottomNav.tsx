@@ -1,4 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom';
+import { MeditatorIcon } from '../icons/MeditatorIcon';
 import styles from './BottomNav.module.css';
 
 function isHomeActive(pathname: string): boolean {
@@ -29,9 +30,7 @@ export function BottomNav() {
         className={`${styles.tab} ${yogaActive ? styles.tabActive : ''}`}
         onClick={() => navigate('/yoga/my')}
         aria-current={yogaActive ? 'page' : undefined}
-      >        <span className={styles.icon} aria-hidden>
-          ◉
-        </span>
+      >        <MeditatorIcon className={styles.iconSvg} />
         Yoga
       </button>
     </nav>
